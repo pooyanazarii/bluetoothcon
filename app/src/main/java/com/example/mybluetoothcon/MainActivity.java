@@ -36,12 +36,13 @@ public class MainActivity extends AppCompatActivity {
     BluetoothAdapter bluetoothAdapter;
     ArrayAdapter<String> discoveredDevicesAdapter;
     BroadcastReceiver discoveryReceiver;
-
     Button fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
          fab = findViewById(R.id.btn_fab);
         Snackbar.make(fab, "Welcome", Snackbar.LENGTH_SHORT).show();
@@ -59,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         initReciver();
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+
             if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED){
                 ActivityCompat.requestPermissions(this,
@@ -102,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 Snackbar.make(fab,"Permission Granted" , Snackbar.LENGTH_SHORT).show();
             }else {
-                Toast.makeText(this, "Permission Denid, closing application", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Permission Deneid, closing application", Toast.LENGTH_SHORT).show();
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
