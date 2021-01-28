@@ -14,6 +14,8 @@ public class ChatController {
     private AcceptThread acceptThread;
     private ConnectThread connectThread;
 
+    private ReadWriteThread readWriteThread;
+
     private int state;
     private BluetoothAdapter bluetoothAdapter;
 
@@ -124,13 +126,7 @@ public class ChatController {
             //connect
             connected(socket, device);
         }
-        public void cancel() {
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+
 
 
         public ConnectThread(BluetoothDevice device) {
@@ -143,11 +139,9 @@ public class ChatController {
             }
             socket = tmp;
         }
+    }
 
-
-
-
-
+    public class ReadWriteThread extends Thread{
 
 
     }
