@@ -6,6 +6,8 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.UUID;
 
 public class ChatController {
@@ -15,12 +17,14 @@ public class ChatController {
     private ConnectThread connectThread;
 
     private ReadWriteThread readWriteThread;
-
+    private ChatController
     private int state;
     private BluetoothAdapter bluetoothAdapter;
 
     public ChatController() {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+
     }
 
     private static final int STATE_NONE = 0;
@@ -128,7 +132,6 @@ public class ChatController {
         }
 
 
-
         public ConnectThread(BluetoothDevice device) {
             BluetoothSocket tmp = null;
             this.device = device;
@@ -141,10 +144,52 @@ public class ChatController {
         }
     }
 
-    public class ReadWriteThread extends Thread{
+    public class ReadWriteThread extends Thread {
+        private BluetoothSocket socket;
+        private InputStream inStream;
+        private OutputStream outStream;
+
+        public ReadWriteThread(BluetoothSocket socket) {
+            this.socket = socket;
+            InputStream tmpIn = null;
+            OutputStream tmpOut = null;
+
+            try {
+                tmpIn = socket.getInputStream();
+                tmpOut = socket.getOutputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            inStream = tmpIn;
+            outStream = tmpOut;
 
 
+        }
+
+        @Override
+        public void run() {
+            byte[] buffer = new byte[1024];
+            int len;
+
+            while (true) {
+                try {
+                    len = inStream.read(buffer);
+                } catch (IOException e) {
+                    e.printStackTrace(); break;
+                    //start again and listen
+                    ChatContrtbller.this.start():
+                }
+                //send to UI -> Activity
+
+            }
+        }
     }
+
+//    private void start({
+//
+//    })
+
+
 }
 
 
